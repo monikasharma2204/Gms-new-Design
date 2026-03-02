@@ -29,6 +29,8 @@ const LoginPage = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [buttonLoading, setButtonLoading] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
+
 
     const navigate = useNavigate();
 
@@ -43,6 +45,7 @@ const LoginPage = () => {
         onSubmit: async (values) => {
             if (buttonLoading) return;
             setButtonLoading(true);
+            setErrorMessage("");
 
             try {
                 const response = await loginService(values);
@@ -60,10 +63,13 @@ const LoginPage = () => {
                 }
             } catch (error) {
                 console.error("Login failed:", error);
+                const msg = error.response?.data?.message || "Invalid credentials. Please try again.";
+                setErrorMessage(msg);
             } finally {
                 setButtonLoading(false);
             }
         },
+
     });
 
 
@@ -137,7 +143,22 @@ const LoginPage = () => {
                             >
                                 Login to your account
                             </Typography>
+                            {errorMessage && (
+                                <Typography
+                                    sx={{
+                                        color: "#B41E38",
+                                        fontFamily: "Calibri",
+                                        fontSize: "14px",
+                                        marginTop: "10px",
+                                        fontWeight: "700",
+                                        textAlign: "center"
+                                    }}
+                                >
+                                    {errorMessage}
+                                </Typography>
+                            )}
                         </Box>
+
 
 
 
