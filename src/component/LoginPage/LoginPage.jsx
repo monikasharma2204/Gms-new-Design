@@ -40,23 +40,32 @@ const LoginPage = () => {
             password: "",
         },
         validationSchema: validationSchema,
-        onSubmit: (values) => {
-
+        onSubmit: async (values) => {
             if (buttonLoading) return;
-
             setButtonLoading(true);
 
+            try {
+                const response = await loginService(values);
+                if (response.status === 200) {
+                    const { token } = response.data;
+                    localStorage.setItem("token", token);
 
-            setTimeout(() => {
-                setIsLoading(true);
-            }, 600);
+                    setTimeout(() => {
+                        setIsLoading(true);
+                    }, 600);
 
-
-            setTimeout(() => {
-                navigate("/");
-            }, 1500);
+                    setTimeout(() => {
+                        navigate("/");
+                    }, 1500);
+                }
+            } catch (error) {
+                console.error("Login failed:", error);
+            } finally {
+                setButtonLoading(false);
+            }
         },
     });
+
 
 
     if (isLoading) {
