@@ -66,6 +66,7 @@ export const SHORTCUT_SECTIONS = [
       { value: "Primary", label: "Primary" },
       { value: "Consignment", label: "Consignment" },
       { value: "Stock Check", label: "Stock Check" },
+      { value: "Consignment Check", label: "Consignment Check" },
     ],
   },
   {
@@ -207,7 +208,7 @@ export default function AddShortcutModal({
     }
   }, [open, selected]);
 
- 
+
   useEffect(() => {
     if (!open) return;
 
@@ -369,7 +370,7 @@ export default function AddShortcutModal({
 
             <Box className="homeShortcutDivider" />
 
-            <Box 
+            <Box
               ref={leftScrollRef}
               className="homeShortcutLeftScroll"
               sx={scrollbarStyles}
@@ -505,7 +506,7 @@ export default function AddShortcutModal({
                     </Typography>
                   </Box>
                   <IconButton
-                    className="homeShortcutRemoveBtn"  sx={{padding: "0px !important"}}
+                    className="homeShortcutRemoveBtn" sx={{ padding: "0px !important" }}
                     onClick={() => remove(value)}
                   >
                     <RemoveIcon />
